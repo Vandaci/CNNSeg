@@ -29,6 +29,7 @@ class FeatureGenerator():
         x=self.PullValidPoints(x,valid_idx)
         y=self.PullValidPoints(y,valid_idx)
         z=self.PullValidPoints(z,valid_idx)
+        self.__log_table=np.log1p(np.arange(256))     #   ln(1+x)   
         intensity=self.PullValidPoints(intensity,valid_idx)
         idx_row=self.PullValidPoints(idx_row,valid_idx)
         idx_col=self.PullValidPoints(idx_col,valid_idx)
@@ -44,9 +45,9 @@ class FeatureGenerator():
         for idx,count in zip(uidx,counts):
             max_height_data[idx]=np.max(z[idx==map_idx])
             mean_height_data[idx]=np.mean(z[idx==map_idx])
-            grid_count[idx]=count
             top_intensity_data[idx]=np.max(intensity[idx==map_idx])/255
             mean_intensity_data[idx]=np.mean(intensity[idx==map_idx])/255
+            grid_count[idx]=self.LogCount(count.astype(np.int))
         none_empty[grid_count>0]=1
         grid_col,grid_row=np.meshgrid(range(self.cols),range(self.rows))
         center_x=self.Pix2Pc(grid_row,self.rows,self.lrange)
@@ -73,6 +74,12 @@ class FeatureGenerator():
     def Pix2Pc(in_pixel,in_size,out_range):
         res=2.0*out_range/in_size
         return out_range-(in_pixel+0.5)*res
+    
+    def LogCount(self,count_data):
+        if count_data<256:
+            return self.__log_table[count_data]
+        return np.log(1+count_data)
+
 
 if __name__=='__main__':
     test_pcd=pc.PointCloud()
