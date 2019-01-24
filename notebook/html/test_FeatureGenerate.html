@@ -13120,6 +13120,9 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span> 
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../src/&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">featuregenerate</span> <span class="k">as</span> <span class="nn">fg</span> 
+<span class="kn">import</span> <span class="nn">pointcloud</span> <span class="k">as</span> <span class="nn">pc</span>
+<span class="kn">import</span> <span class="nn">validpoint</span>
 </pre></div>
 
     </div>
@@ -13132,8 +13135,11 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">featuregenerate</span> <span class="k">as</span> <span class="nn">fg</span> 
-<span class="kn">import</span> <span class="nn">pointcloud</span> <span class="k">as</span> <span class="nn">pc</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tst</span><span class="o">=</span><span class="n">pc</span><span class="o">.</span><span class="n">PointCloud</span><span class="p">()</span>
+<span class="n">tst</span><span class="o">.</span><span class="n">ReadFromBinFile</span><span class="p">(</span><span class="s1">&#39;../data/test.pcd&#39;</span><span class="p">)</span>
+<span class="n">vldp</span><span class="o">=</span><span class="n">validpoint</span><span class="o">.</span><span class="n">ValidPoints</span><span class="p">(</span><span class="n">tst</span><span class="p">,</span><span class="mi">640</span><span class="p">,</span><span class="mi">640</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">fg_</span><span class="o">=</span><span class="n">fg</span><span class="o">.</span><span class="n">FeatureGenerator</span><span class="p">(</span><span class="n">vldp</span><span class="p">)</span>
+<span class="n">outblob</span><span class="o">=</span><span class="n">fg_</span><span class="o">.</span><span class="n">Generate</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13144,22 +13150,6 @@ div#notebook {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_pcd</span><span class="o">=</span><span class="n">pc</span><span class="o">.</span><span class="n">PointCloud</span><span class="p">()</span>
-<span class="n">test_pcd</span><span class="o">.</span><span class="n">ReadFromBinFile</span><span class="p">(</span><span class="s1">&#39;../data/test.pcd&#39;</span><span class="p">)</span>
-<span class="n">test</span><span class="o">=</span><span class="n">fg</span><span class="o">.</span><span class="n">FeatureGenerator</span><span class="p">(</span><span class="n">test_pcd</span><span class="p">,</span><span class="mi">640</span><span class="p">,</span><span class="mi">640</span><span class="p">,</span><span class="mi">60</span><span class="p">)</span>
-<span class="n">outblob</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">Generate</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">outblob</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -13190,7 +13180,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> 
@@ -13216,13 +13206,13 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.colorbar.Colorbar at 0x7f72e8093438&gt;</pre>
+<pre>&lt;matplotlib.colorbar.Colorbar at 0x7f0ac393a518&gt;</pre>
 </div>
 
 </div>
@@ -13248,7 +13238,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
@@ -13272,13 +13262,13 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.colorbar.Colorbar at 0x7f72e2676a90&gt;</pre>
+<pre>&lt;matplotlib.colorbar.Colorbar at 0x7f0ac383bb70&gt;</pre>
 </div>
 
 </div>
@@ -13304,7 +13294,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
@@ -13328,13 +13318,13 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.colorbar.Colorbar at 0x7f72e0d487f0&gt;</pre>
+<pre>&lt;matplotlib.colorbar.Colorbar at 0x7f0ac1f0e9b0&gt;</pre>
 </div>
 
 </div>
@@ -13360,7 +13350,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
@@ -13384,13 +13374,13 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.colorbar.Colorbar at 0x7f72e0c967f0&gt;</pre>
+<pre>&lt;matplotlib.colorbar.Colorbar at 0x7f0ac1e5b8d0&gt;</pre>
 </div>
 
 </div>
