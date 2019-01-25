@@ -1,4 +1,19 @@
 # -*- coding: utf-8 -*-
+'''
+1.导入模块，简称pc
+2.类PointCloud()
+属性：
+            x : x坐标
+            y : y坐标
+            z : z方向高度
+    intensity : 反射强度
+方法：
+    xyz=PointCloud.ReadFromBinFile(pcd_file_path)
+    读取pcd二进制文件，返回numpy.array()类数据，shape=(len,4)
+3.验证是否通过调试 ：True
+
+'''
+
 import pcl.io as pio 
 import numpy as np 
 

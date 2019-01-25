@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import numpy as np 
+
 class ValidPoints():
     def __init__(self,pcdata,rows,cols,
                  max_height,min_height,lrange):
@@ -14,6 +15,8 @@ class ValidPoints():
         self.max_height=max_height
         self.min_height=min_height
         self.lrange=lrange
+        self.idx_col=None # 投射到map图中的列
+        self.idx_row=None # 投射到map图中的行
         self.GetValid()
 
     def GetValid(self):
@@ -28,8 +31,9 @@ class ValidPoints():
         self.valid_z=self.RawPoints.z[valid_idx]
         self.valid_intensity=self.RawPoints.intensity[valid_idx]
         self.validindex=np.where(valid_idx==True)[0]
-        self.idx_row=idx_row
-        self.idx_col=idx_col
+        self.idx_row=idx_row[valid_idx]
+        self.idx_col=idx_col[valid_idx]
+        
     @staticmethod
     def F2I(x,rows,lrange):
         return np.floor(rows*(lrange-x)/(2*lrange)).astype(np.int32)
