@@ -41,6 +41,6 @@ class ValidPoints():
 if __name__=='__main__':
     import pointcloud as pc 
     tst=pc.PointCloud()
-    tst.ReadFromBinFile('/home/reme/桌面/CNNSeg/data/test.pcd')
+    tst.ReadFromPcdFile('/home/reme/桌面/CNNSeg/data/test.pcd')
     vldpc=ValidPoints(tst,640,640,5,-5,60)
     pass

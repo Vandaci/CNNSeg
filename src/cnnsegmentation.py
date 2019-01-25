@@ -24,7 +24,7 @@ class CNNSegmention():
             caffe.set_mode_cpu()
         # step1 : feature_generate
         rawpoint=pc.PointCloud()
-        rawpoint.ReadFromBinFile(PCD_Path)
+        rawpoint.ReadFromPcdFile(PCD_Path)
         self.vldpc=vp.ValidPoints(pcdata=rawpoint,rows=640,cols=640,
                              lrange=60,max_height=5,min_height=-5)
         ffg=fg.FeatureGenerator()
@@ -33,7 +33,6 @@ class CNNSegmention():
         cnnseg_net=caffe.Net(proto_path,caffe_model_path,caffe.TEST)
         cnnseg_net.blobs['data'].data[...]=self.feature_blob
         self.outblobs=cnnseg_net.forward()       
-
 
     def segment(self,object_thresh=0.5):
         clst=ct.Cluster2d(self.vldpc)
@@ -47,29 +46,35 @@ class CNNSegmention():
     def display_obstacle(self):
         obstacle_Map=np.zeros(self.vldpc.rows*self.vldpc.cols)
         max_min_rowcol=[]
-        dic_obclass={'Unknow':100,'Vehicle':110,'Bicycle':120,'Pedestrian':130}
-        for objc,idx in zip(self.cluster.objects,self.cluster.valid_objects):
-            obstacle_Map[self.cluster.obstacles[idx].grids]=dic_obclass[objc.type]
+        class_color={'Unknow':'black','Vehicle':'red','Bicycle':'green','Pedestrian':'blue'}
+        for idx in self.cluster.valid_objects:
+            obstacle_Map[self.cluster.obstacles[idx].grids]=1
             [r,c]=self.grid2rowcol(self.cluster.obstacles[idx].grids,self.vldpc.rows)
             r_max=np.max(r)
             r_min=np.min(r)
             c_max=np.max(c)
             c_min=np.min(c)
             max_min_rowcol.append([r_min,r_max,c_min,c_max])
+        obstacle_Map[obstacle_Map==0]=-np.inf
         plt.imshow(obstacle_Map.reshape(self.vldpc.rows,self.vldpc.cols))
         ax=plt.gca()
-        for idx in max_min_rowcol:
-            rec=patch.Rectangle((idx[0],idx[2]),idx[3]-idx[2],idx[1]-idx[0],
-                                edgecolor='r',facecolor='none')
+        c_label=[]
+        for idx,objc in zip(max_min_rowcol,self.cluster.objects):
+            rec=patch.Rectangle((idx[2]-1,idx[0]-1),idx[3]-idx[2]+2,idx[1]-idx[0]+2,
+                                edgecolor=class_color[objc.type],facecolor='none')
+            if not objc.type in c_label:
+                c_label.append(objc.type)
+                rec.set_label(objc.type)
             ax.add_patch(rec)
+        ax.legend()
         plt.title('Obstacles Map')
         plt.show()
 
     @staticmethod
-    def grid2rowcol(grid,rows):
+    def grid2rowcol(grid,cols):
         grid=np.array(grid)
-        r=grid//rows-1
-        c=grid%rows-1
+        r=grid//cols
+        c=grid%cols
         return r,c
 
 if __name__=='__main__':

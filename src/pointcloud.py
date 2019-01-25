@@ -8,7 +8,7 @@
             z : z方向高度
     intensity : 反射强度
 方法：
-    xyz=PointCloud.ReadFromBinFile(pcd_file_path)
+    xyz=PointCloud.ReadFromPcdFile(pcd_file_path)
     读取pcd二进制文件，返回numpy.array()类数据，shape=(len,4)
 3.验证是否通过调试 ：True
 
@@ -24,7 +24,7 @@ class PointCloud():
         self.z=None
         self.intensity=None
 
-    def ReadFromBinFile(self,pcd_file_path):
+    def ReadFromPcdFile(self,pcd_file_path):
         reader=pio.PCDReader()
         pcdata=reader.read(pcd_file_path)
         self.x=pcdata[0].data['x']
@@ -36,9 +36,12 @@ class PointCloud():
                                self.z.reshape(self.z.size,1),
                                self.intensity.reshape(self.intensity.size,1)],axis=1)
 
+    # def ReadFromBinFile(self,bin_file_path):
+
+
 if __name__=='__main__':
     test_pcd=PointCloud()
-    a=test_pcd.ReadFromBinFile('/home/reme/桌面/CNNSeg/data/test.pcd')
+    a=test_pcd.ReadFromPcdFile('/home/reme/桌面/CNNSeg/data/test.pcd')
     pass
 
 

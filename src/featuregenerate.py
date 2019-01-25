@@ -59,7 +59,7 @@ if __name__=='__main__':
     import pointcloud as pc 
     import validpoint as vp
     tst=pc.PointCloud()
-    tst.ReadFromBinFile('/home/reme/桌面/CNNSeg/data/test.pcd')
+    tst.ReadFromPcdFile('/home/reme/桌面/CNNSeg/data/test.pcd')
     vldpc=vp.ValidPoints(tst,640,640,5,-5,60)
     vldpc.GetValid()
     fg=FeatureGenerator()
