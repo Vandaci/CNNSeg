@@ -24,7 +24,7 @@ class CNNSegmention():
             caffe.set_mode_cpu()
         # step1 : feature_generate
         rawpoint=pc.PointCloud()
-        rawpoint.ReadFromPcdFile(PCD_Path)
+        rawpoint.ReadFromBinFile(PCD_Path)
         self.vldpc=vp.ValidPoints(pcdata=rawpoint,rows=640,cols=640,
                              lrange=60,max_height=5,min_height=-5)
         ffg=fg.FeatureGenerator()
@@ -78,11 +78,11 @@ class CNNSegmention():
         return r,c
 
 if __name__=='__main__':
-    proto_path='/home/reme/文档/cnnseg/Apollo_Lidar_CNNSeg/model/deploy.prototxt'
-    caffe_model_path='/home/reme/文档/cnnseg/Apollo_Lidar_CNNSeg/model/deploy.caffemodel'
-    test_pcd_path='/home/reme/文档/cnnseg/Apollo_Lidar_CNNSeg/data/test.pcd'
+    proto_path='/home/reme/桌面/CNNSeg/model/deploy.prototxt'
+    caffe_model_path='/home/reme/桌面/CNNSeg/model/deploy.caffemodel'
+    test_bin_path='/home/reme/桌面/CNNSeg/data/17.bin'
     test_cnnseg=CNNSegmention()
-    test_cnnseg.forward(proto_path,caffe_model_path,test_pcd_path)
+    test_cnnseg.forward(proto_path,caffe_model_path,test_bin_path)
     ok=test_cnnseg.segment()
     if ok:
         print('Congratulations! \nAll the tasks have been completed and will generate obstacle information for you.')
@@ -95,4 +95,4 @@ if __name__=='__main__':
         test_cnnseg.display_obstacle()
     else:
         print('Failed! \n Please Check it')
-    
+    pass

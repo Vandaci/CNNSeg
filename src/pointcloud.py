@@ -36,7 +36,14 @@ class PointCloud():
                                self.z.reshape(self.z.size,1),
                                self.intensity.reshape(self.intensity.size,1)],axis=1)
 
-    # def ReadFromBinFile(self,bin_file_path):
+    def ReadFromBinFile(self,bin_file_path):
+        pc=np.fromfile(bin_file_path,dtype=np.float32)
+        pc=pc.reshape((pc.size//4,4))
+        self.x=pc[:,0]
+        self.y=pc[:,1]
+        self.z=pc[:,2]
+        self.intensity=pc[:,3]
+        return pc
 
 
 if __name__=='__main__':
