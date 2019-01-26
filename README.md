@@ -36,41 +36,36 @@ CNNSeg Algorithm in APOLLO3.0
   临时文件夹，主要存储的临时的Python试语法文件，或者临时测试算法的正确性脚本  
 * ``src/``    
   CNNSeg源代码文件夹，cnnseg各模块算法  
-  $ \Rightarrow $ ``cluster2d.py`` 簇类，主要应用联合查找算法，用于障碍物聚类    
-  $ \Rightarrow $``featuregenerator``特征生成类，用于处理点云``*.pcd``文件，生成cnnseg网络需要的数据  
-  $ \Rightarrow $ ``cnnsegmentation.py`` 
+  $ \Rightarrow $ ``cluster2d.py``   
+  簇类，主要应用联合查找算法，用于障碍物聚类    
+  $ \Rightarrow $``featuregenerator``  
+  特征生成类，用于处理点云``*.pcd``文件，生成cnnseg网络需要的数据  
+  $ \Rightarrow $ ``cnnsegmentation.py``   
     cnnseg类，生成一个cnnseg对象，整合cnnseg所有过程 
-  $ \Rightarrow $``node.py``
+  $ \Rightarrow $``node.py``  
     节点类，主要用于cluster实现，用于障碍物聚类
-  $ \Rightarrow $ ``obstacles.py``
+  $ \Rightarrow $ ``obstacles.py``  
     障碍物类，存储聚类后的障碍物对象
-  $ \Rightarrow $ ``objects.py``
+  $ \Rightarrow $ ``objects.py``  
     对象类，用于存储一个cnnseg过程的障碍物对象
-  $ \Rightarrow $ ``util.py``
+  $ \Rightarrow $ ``util.py``  
     用于setfind算法的一些实现
-  $ \Rightarrow $ ``validpoint``
+  $ \Rightarrow $ ``validpoint``   
     有效点云类，从原始点云数据中分离出感兴趣的点云
-* ``docs/``
+* ``docs/``  
     存储本算法的一些说明文档与帮助文档
 
 ## 2.目录  
 
 ### 2.1源代码索引
 
-   [cluster2d](src/cluster2d.py)
-   [cnnsegmentation](src/cnnsegmentation.py)
-   [featuregenerate](src/featuregenerate.py)
-   [node](src/node.py)
-   [objects](src/objects.py)
-   [obstacle](src/obstalce.py)
-   [pointcloud](src/pointcloud.py)
-   [util](src/util.py)
-   [validpoint](src/validpoint.py)
-
-
-
-
-
-
-
+   [cluster2d](src/cluster2d.py)  
+   [cnnsegmentation](src/cnnsegmentation.py)  
+   [featuregenerate](src/featuregenerate.py)  
+   [node](src/node.py)  
+   [objects](src/objects.py)  
+   [obstacle](src/obstacle.py)  
+   [pointcloud](src/pointcloud.py)  
+   [util](src/util.py)  
+   [validpoint](src/validpoint.py)  
 
